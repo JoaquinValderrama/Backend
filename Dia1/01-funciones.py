@@ -106,3 +106,11 @@ def recibirAlumnos(clase, *alumnos):
     #para convertir de una tupla a lista
     alumnos_lista = list(alumnos)
     print(type(alumnos_lista))
+
+#Funcion anonima (lambda function) en python
+# si necesitas una sola linea de codigo, podras usar la lambda function 
+sumatoria = lambda numero1, numero2 : numero1 + numero2
+respuesta = sumatoria (10,5)
+print(respuesta)
+
+
