@@ -62,3 +62,55 @@ SELECT direccion FROM vacunatorios WHERE vacuna_id = 1 AND atencion_preferencial
 
 -- Devolver las direcciones cuya vacuna no sea pfizer (1) (diferente que != )  o que tenga atencion preferencial 
 SELECT direccion FROM vacunatorios WHERE vacuna_id !=1 OR atencion_preferencial = TRUE;
+INSERT INTO vacunatorios (id, direccion, numero , atencion_preferencial,latitud,longitud,vacuna_id)VALUES (DEFAULT , 'Calle s/n' , 123 ,FALSE, 10.00,10.00, NULL);
+
+
+-- JOINS 
+
+SELECT * FROM vacunas INNER JOIN vacunatorios ON vacunas.id = vacunatorios.vacuna_id;
+
+-- lEFT JOIN 
+-- Traera todo lo de la izquierda y si es que hay alguna coincidencia con lo de la derecha 
+SELECT * FROM vacunas LEFT JOIN vacunatorios ON vacunas.id = vacunatorios.vacuna_id;
+
+-- RIGHT JOIN 
+-- Traera todo lo de la derecha y si es que hay alguna coincidencia con lo de la izquierda
+SELECT * FROM vacunas RIGHT JOIN vacunatorios ON vacunas.id = vacunatorios.vacuna_id;
+
+
+CREATE TABLE campanias (
+id INT PRIMARY KEY AUTO_INCREMENT,
+nombre VARCHAR(100),
+fecha DATE,
+descripcion TEXT -- Es como el varchar (dependiendo de cuantos caracteres guardemos, separa el espacio de memoria pero no tiene limite)
+);
+
+CREATE TABLE vacunatorios_campanias(
+id INT PRIMARY KEY AUTO_INCREMENT,
+vacunatorio_id INT NOT NULL,
+campania_id INT NOT NULL,
+
+-- CREACION DE RELACIONES
+FOREIGN KEY (vacunatorio_id) REFERENCES vacunatorios(id),
+FOREIGN KEY (campania_id) REFERENCES campanias(id)
+);
+
+INSERT INTO campanias (id, nombre, fecha, descripcion) VALUES
+					  (DEFAULT, 'Pongo el Hombro', '2022-01-01' , 'Campaña de vacunacion para personas adultas'),
+                      (DEFAULT, 'Vacuna Warma', '2022-03-10' , 'Campaña de vacunacion niños menores de 18 años'),
+                      (DEFAULT, 'Mayorcitos', '2022-11-04' , 'Campaña de vacunacion para personas mayores a 65 años');
+                      
+
+INSERT INTO vacunatorios_campanias(id, vacunatorio_id,campania_id) VALUES
+								  (DEFAULT,1,1),
+                                  (DEFAULT,2,1),
+                                  (DEFAULT,3,1),
+                                  (DEFAULT,2,2),
+                                  (DEFAULT,1,2),
+                                  (DEFAULT,3,3),
+                                  (DEFAULT,4,3),
+                                  (DEFAULT,5,3);
+                                  
+		
+-- Desde la campaña hacia el vacunatorio campaña
+SELECT * FROM campanias as C INNER JOIN vacunatorios_campanias as VC ON C.id = VC.campania_id;
