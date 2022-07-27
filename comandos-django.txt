@@ -1,0 +1,5 @@
+django-admin startproject NOMBRE => Crea un nuevo proyecto de django utilizando ese NOMBRE
+python manage.py runserver => levanta el proyecto de Djnago
+python manage.py showmigrations = > muestra todas las miigraciones creadas en el proyecto y con una [X] las migraciones que ya se han efectuado en la bd
+python manage.py migrate => ejecuta todas las migraciones pendientes a realizarse en la bd
+python manage.py sqlmigrate NOMBRE_APP NUM_MIGRACION => retornara la sentencia SQL de la migracion que se va a efectuar en la bd
