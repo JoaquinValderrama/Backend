@@ -21,7 +21,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 #se inicializa mi conexion de mi sqlachemy con la base de datos PERO todavia no me he conectado
 conexion.init_app(app)
 #se ejecuta la conexion y se creara las tablas, PERO si no hay ninguna tabla a crear entonces no lanzara error de credenciales invalidas
-conexion.create_all(app=app)
+# si ya se creo la tabla entonces no debe volver  a intentar crear las tablas ya que me da un error
+# conexion.create_all(app=app)
 
 
 @app.route ('/',methods=['GET'])
