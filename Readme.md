@@ -1,5 +1,4 @@
 
-# Bienvenidos al repositorio del curso de BackEnd :D
+# DOCUMENTANDO NUESTRA APLICACION
 
-## Aca haremos el temario del curso 
-
+- URL https://github.com/axnsan12/drf-yasg
