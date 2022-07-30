@@ -1,1 +1,2 @@
-web: gunicorn tareas.wsgi
+web: gunicorn app:app
+
