@@ -4,7 +4,7 @@
 - URL https://github.com/axnsan12/drf-yasg
 
 
-#Desplegar muestra app en heroku
+# Desplegar muestra app en heroku
 
 - Crear nuestro archivo Procfile en la raiz del proyecto
 - Crear una base de datos en Heroku con JawsDB
@@ -13,3 +13,7 @@
 - Hacemos una conexion remota con heroku git remote -a <nombre-de-la-app>
 - Desplegamos el proyecto con git add -A git commit -m "inicializacion" git push heroku master <nombre-de-la-rama>
 - Hacemos una migracion de la bd con heroku run python manage.py migrate
+
+# Configuracion de CORS
+- Configuramos nuestra app para que pueda ser consumida desde cualquier lugar
+- Instalamos el paquete cors pip install django-cors-headers
