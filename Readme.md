@@ -17,3 +17,17 @@
 # Configuracion de CORS
 - Configuramos nuestra app para que pueda ser consumida desde cualquier lugar
 - Instalamos el paquete cors pip install django-cors-headers
+- Añadimos el paquete a nuestra aplicacion pip freeze >requirements.txt
+- Añadimos las sigtes configuraciones en settings:
+    INSTALLED_APPS = [
+       ...,
+      "corsheaders",
+      ...,
+    ]
+
+    MIDDLEWARE = [
+    ...,
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    ...,
+]
