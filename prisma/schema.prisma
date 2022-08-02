@@ -1,0 +1,54 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Departamento{
+  id Int @id @unique @default(autoincrement())
+  nombre String @db.VarChar(45) //el tipo de dato va a ser especifico
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  //un departamento tiene varios trabajadores
+  trabajadores Trabajador[]
+ @@map("departamentos") 
+}
+
+model Trabajador{
+  id Int @id @unique @default(autoincrement())
+  nombre String @db.VarChar(45)
+  apellido String @db.VarChar(45)
+  email String @unique @db.VarChar(45)
+  password String @db.Text 
+  rol ROL_TRABAJADOR @default(PRACTICANTE)
+  departamentoId Int @map("departamento_id")
+  // ahora se crea la relacion
+  // un trabajador pertenece a un departamento
+  departamento Departamento @relation(fields:[departamentoId], references: [id])
+  @@map("trabajadores")
+  asistencias Asistencia[]
+}
+
+model Asistencia{
+  id Int @id @unique @default(autoincrement())
+  fecha DateTime @db.Date
+  ingreso DateTime @db.Time()
+  salida DateTime @db.Time()
+  trabajadorId Int @map("trabajador_id")
+  trabajador Trabajador @relation(fields:[trabajadorId],references: [id])
+
+  @@map("asistencia")
+}
+
+enum ROL_TRABAJADOR {
+  GERENTE
+  OBRERO
+  SUPERVISOR
+  PRACTICANTE
+}
