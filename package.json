@@ -7,9 +7,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:dev": "dotenv -e .env -- nodemon ./src/server.js",
-    "generar:migracion" : "npx prisma migrate dev",
-    "crear:migracion" : "npx prisma migrate --preview-feature --create-only",
-    "ejecutar:migracion" : "npx prisma migrate deploy"
+    "generar:migracion": "npx prisma migrate dev",
+    "crear:migracion": "npx prisma migrate --preview-feature --create-only",
+    "ejecutar:migracion": "npx prisma migrate deploy"
   },
   "repository": {
     "type": "git",
@@ -24,7 +24,9 @@
   "dependencies": {
     "@prisma/client": "^4.1.1",
     "express": "^4.18.1",
-    "prisma": "^4.1.1"
+    "lodash": "^4.17.21",
+    "prisma": "^4.1.1",
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "dotenv-cli": "^6.0.0",
