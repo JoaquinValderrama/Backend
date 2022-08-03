@@ -51,3 +51,27 @@ export const trabajadoresRequestDTO = (data) =>{
     }
 }
 
+export const cambiarPasswordRequestDTO =(data) =>{
+    const errores = []
+    
+    if(_.isNil(data.email)){
+        errores.push('falta el email')
+    }
+    if(_.isNil(data.antiguaPassword)){
+        errores.push("falta la antigua Password")
+    }
+    if(_.isNil(data.nuevaPassword)){
+        errores.push("falta la nueva Password")
+    }
+
+    if (_.isNil(data.email) && !validator.isEmail(data.email)){
+        errores.push("Email invalido")
+    }
+
+    if (errores.length !=0){
+        throw new Error(errores)
+    }else{
+        return data;
+    }
+}
+
