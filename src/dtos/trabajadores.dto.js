@@ -75,3 +75,25 @@ export const cambiarPasswordRequestDTO =(data) =>{
     }
 }
 
+export const loginRequestDTO = (data) =>{
+
+    const errores = []
+    
+    if(_.isNil(data.email)){
+        errores.push('falta el email')
+    }
+
+    if(_.isNil(data.password)){
+        errores.push('falta el password')
+    }
+
+    if(!_.isNil(data.email) && !validator.isEmail(data.email)){
+        errores.push('Email Invalido')
+    }
+
+    if(errores.length !==0){
+        throw new Error(errores)
+    }else{
+        return data;
+    }
+}

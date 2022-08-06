@@ -1,9 +1,9 @@
-import {trabajadoresRequestDTO,cambiarPasswordRequestDTO} from "../dtos/trabajadores.dto.js"
+import {trabajadoresRequestDTO,cambiarPasswordRequestDTO, loginRequestDTO} from "../dtos/trabajadores.dto.js"
 import CryptoJS from "crypto-js"
 import bcryptjs from "bcryptjs"
 import { PrismaConnector } from "../prisma.js"
 import { validarCorreo,cambioPassword } from "../utils/correos.js"
-import { json } from "express"
+import jwt from 'jsonwebtoken'
 
 export const postRegistro = async(req,res) =>{
     try {
@@ -43,6 +43,7 @@ export const postRegistro = async(req,res) =>{
 export const validarTrabajador = async(req,res) =>{
     const {token} = req.body;
     try {
+    
         const data = CryptoJS.AES.decrypt(token,process.env.LLAVE_ENCRIPTACION).toString(CryptoJS.enc.Utf8)
         console.log(data)
 
@@ -113,3 +114,51 @@ export const cambiarPassword = async(req,res) =>{
         })
     }
 }
+
+export const login = async (req, res) => {
+    const { body } = req;
+    try {
+      const data = loginRequestDTO(body);
+  
+      const trabajador = await PrismaConnector.trabajador.findUniqueOrThrow({
+        where: { email: data.email },
+      });
+  
+      if (bcryptjs.compareSync(data.password, trabajador.password)) {
+        console.log("si es la password");
+        const token = jwt.sign(
+          {
+            id: trabajador.id,
+            message: "Mensaje oculto",
+          },
+          process.env.JWT_SECRET,
+          { expiresIn: "2h" }
+          // expiresIn: un numero sera segundos, si es un numero con comillas sera ms, '1 day', '10h', '50d', '1y'
+        );
+  
+        return res.json({
+          message: "Bienvenido",
+          result: token,
+        });
+      } else {
+        console.log("contraseña incorrecta");
+  
+        throw new Error("Password invalida");
+      }
+    } catch (error) {
+      return res.status(400).json({
+        message: "Error al hacer el login",
+        result: error.message,
+      });
+    }
+  };
+
+export const perfil = async (req,res) =>{
+    console.log(req.user)
+
+    const {password,...result} = req.user;
+    return res.json({
+        message: null,
+        result 
+    })
+  }
